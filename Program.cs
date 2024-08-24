@@ -6,6 +6,16 @@ public class Program {
         Merge_1(new int[] { 2, 0 }, 1, new int[] { 1 }, 1);
 
         System.Console.WriteLine(RemoveDuplicates(new int[] { 1, 1, 1, 2, 2, 3 }, 2));
+
+
+        List<int> list = new List<int>() { 2, 3, 4, 5, 6 };
+
+        var lis = list.GetEnumerator();
+        System.Console.WriteLine("迭代器遍历的结果：");
+        while (lis.MoveNext()) {
+            System.Console.Write(lis.Current + ", ");
+        }
+
     }
     #region 合并两个有序数组
     public static void Merge(int[] nums1, int m, int[] nums2, int n) {
@@ -110,4 +120,40 @@ public class Program {
     }
     #endregion
 
+    #region 多数元素
+    // 暴力拆解
+    public static int MajorityElement(int[] nums) {
+        float count = nums.Length / 2;
+        Dictionary<int, int> all = new Dictionary<int, int>();
+        for (int i = 0; i < nums.Length; i++) {
+            var num = nums[i];
+            if (all.ContainsKey(num)) {
+                all[num]++;
+                if (all[num] > count) {
+                    return num;
+                }
+            } else {
+                all.Add(num, 1);
+            }
+        }
+
+        foreach (var value in all) {
+            if (value.Value > count) {
+                return value.Key;
+            }
+        }
+        return default;
+    }
+
+    // 下标的中位数 因为这个多数会大于N/2 个，所以如果排序以后，这个数一定超过下标的中位数
+    //  1 1 1 1 2 3 4  7个元素，1至少要4个 大于n/2个 
+    //  0 1 2 3 4 5 6          下标至少是从3开始  下标是大于等于n/2(会向下取整)
+    public static int MajorityElement_1(int[] nums) {
+
+        Array.Sort(nums);
+        int index = nums.Length / 2;
+        return nums[index];
+
+    }
+    #endregion
 }
