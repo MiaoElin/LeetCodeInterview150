@@ -4,6 +4,8 @@ public class Program {
     public static void Main() {
         System.Console.WriteLine("Hello");
         Merge_1(new int[] { 2, 0 }, 1, new int[] { 1 }, 1);
+
+        System.Console.WriteLine(RemoveDuplicates(new int[] { 1, 1, 1, 2, 2, 3 }, 2));
     }
     #region 合并两个有序数组
     public static void Merge(int[] nums1, int m, int[] nums2, int n) {
@@ -85,4 +87,27 @@ public class Program {
     }
 
     #endregion
+
+    #region 删除有序数组中的重复项II
+    // 最多可重复k项
+    public static int RemoveDuplicates(int[] nums, int k) {
+        // 长度在2以内，重复元素不会超过2;
+        if (nums.Length <= k) {
+            return nums.Length;
+        }
+
+        int left = k;
+        int right = k;
+        while (right < nums.Length) {
+            // 当前是nums[left], 当前退两个位置是 left-2；找到跟left-2位置不一样的right才能覆盖当前，否者right++;
+            if (nums[left - k] != nums[right]) {
+                nums[left] = nums[right];
+                left++;
+            }
+            right++;
+        }
+        return left;
+    }
+    #endregion
+
 }
