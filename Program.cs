@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 public class Program {
     public static void Main() {
@@ -7,7 +8,7 @@ public class Program {
 
         System.Console.WriteLine(RemoveDuplicates(new int[] { 1, 1, 1, 2, 2, 3 }, 2));
         Rotate_1(new int[] { -1, -100, 3, 99 }, 2);
-
+        System.Console.WriteLine("股票赚了：" + MaxProfit_2(new int[] { 7, 1, 5, 3, 6, 4 }));
     }
     #region 合并两个有序数组
     public static void Merge(int[] nums1, int m, int[] nums2, int n) {
@@ -200,8 +201,56 @@ public class Program {
 
     #endregion
 
+    #region 买卖股票的最佳时机
+    public static int MaxProfit(int[] prices) {
+        int res = 0;
+        int minStart = int.MaxValue;
+        for (int i = 0; i < prices.Length; i++) {
+            if (prices[i] >= minStart) {
+                continue;
+            }
+            for (int j = i + 1; j < prices.Length; j++) {
+                if (prices[j] < prices[i]) {
+                    continue;
+                }
+                if (prices[j] - prices[i] > res) {
+                    res = prices[j] - prices[i];
+                }
+            }
+            if (prices[i] < minStart) {
+                minStart = prices[i];
+            }
+        }
+        return res;
+    }
 
+    public static int MaxProfit_1(int[] prices) {
+        int res = 0;
+        int lowest = int.MaxValue;
 
+        for (int i = 0; i < prices.Length; i++) {
+            if (prices[i] < lowest) {
+                lowest = prices[i];
+            } else {
+                res = Math.Max(res, prices[i] - lowest);
+            }
+        }
+        return res;
+    }
+
+    #endregion
+
+    #region 买卖股票的最佳时机II
+
+    // 7, 1, 5, 3, 6, 4   只要比前一天高的都累加，
+    public static int MaxProfit_2(int[] prices) {
+        int res = 0;
+        for (int i = 1; i < prices.Length; i++) {
+            res += Math.Max(prices[i] - prices[i - 1], 0);
+        }
+        return res;
+    }
+    #endregion
 
 
 
