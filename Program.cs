@@ -6,15 +6,7 @@ public class Program {
         Merge_1(new int[] { 2, 0 }, 1, new int[] { 1 }, 1);
 
         System.Console.WriteLine(RemoveDuplicates(new int[] { 1, 1, 1, 2, 2, 3 }, 2));
-
-
-        List<int> list = new List<int>() { 2, 3, 4, 5, 6 };
-
-        var lis = list.GetEnumerator();
-        System.Console.WriteLine("迭代器遍历的结果：");
-        while (lis.MoveNext()) {
-            System.Console.Write(lis.Current + ", ");
-        }
+        Rotate_1(new int[] { -1, -100, 3, 99 }, 2);
 
     }
     #region 合并两个有序数组
@@ -156,4 +148,71 @@ public class Program {
 
     }
     #endregion
+
+    #region 轮转数组
+    public static void Rotate(int[] nums, int k) {
+        int[] temp = new int[nums.Length];
+        nums.CopyTo(temp, 0);
+        int start = temp.Length - k % temp.Length;
+        for (int i = 0; i < temp.Length; i++) {
+            nums[i] = temp[(start + i) % temp.Length];
+        }
+    }
+
+    // 方法二，节省空间（o（1）)
+    public static void Rotate_1(int[] nums, int k) {
+        {
+            k %= nums.Length; // 防止k大于数组长度的时候
+            int groupCount = GCD(nums.Length, k);
+            int groupSize = nums.Length / groupCount;
+
+            for (int i = 0; i < groupCount; i++) {
+                int curIndex = i;
+                int curNum = nums[curIndex];
+                for (int j = 0; j < groupSize; j++) {
+                    int nextIndex = (curIndex + k) % nums.Length;
+                    int temp = nums[nextIndex];
+                    nums[nextIndex] = curNum;
+                    curNum = temp;
+                    curIndex = nextIndex;
+                }
+            }
+
+            string s = "";
+
+            foreach (var num in nums) {
+                s += num + ", ";
+            }
+            System.Console.WriteLine(s);
+        }
+    }
+
+    // 最大公约数（能分别被这两个数整除的最大数）
+    public static int GCD(int a, int b) {
+        if (b == 0) {
+            return a;
+        }
+        if (a == 0) {
+            return b;
+        }
+        return GCD(b, a % b);
+    }
+
+    #endregion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
