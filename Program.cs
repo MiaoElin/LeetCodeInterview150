@@ -9,6 +9,8 @@ public class Program {
         System.Console.WriteLine(RemoveDuplicates(new int[] { 1, 1, 1, 2, 2, 3 }, 2));
         Rotate_1(new int[] { -1, -100, 3, 99 }, 2);
         System.Console.WriteLine("股票赚了：" + MaxProfit_2(new int[] { 7, 1, 5, 3, 6, 4 }));
+
+        AddBinary("1010", "1011");
     }
     #region 合并两个有序数组
     public static void Merge(int[] nums1, int m, int[] nums2, int n) {
@@ -252,8 +254,54 @@ public class Program {
     }
     #endregion
 
+    #region 单次规律
+    public static bool WordPattern(string pattern, string s) {
+        bool isTrue = false;
+        return isTrue;
+    }
+    #endregion
 
-
+    #region  二进制求和
+    // 11
+    public static string AddBinary(string a, string b) {
+        if (a == "0" && b == "0") {
+            return "0";
+        }
+        string s = "";
+        int leave = 0;
+        int index = 0;
+        while (a.Length - index >= 0 || b.Length - index >= 0) {
+            if (a.Length - 1 - index >= 0) {
+                char cur = a[a.Length - 1 - index];
+                if (cur == '0') {
+                    leave += 0;
+                } else {
+                    leave += 1;
+                }
+            }
+            if (b.Length - 1 - index >= 0) {
+                char cur = b[b.Length - 1 - index];
+                if (cur == '0') {
+                    leave += 0;
+                } else {
+                    leave += 1;
+                }
+            }
+            index++;
+            if (leave == 0 && index > a.Length && index > b.Length) {
+                break;
+            }
+            s += (leave % 2).ToString();
+            leave /= 2;
+        }
+        string res = "";
+        for (int i = s.Length - 1; i >= 0; i--) {
+            res += s[i];
+        }
+        System.Console.WriteLine(res);
+        return res;
+    }
+    #endregion
 
 
 
